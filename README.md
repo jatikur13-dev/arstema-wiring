@@ -5,6 +5,10 @@ berjalan lokal di perangkat. Bukan sertifikasi desain listrik atau replika OEM.
 
 **Live demo:** https://arstema.com/wiring
 
+![Demo Arstema Wiring: menyalakan MCB, menekan tombol start, diagram IEC 60617, dan panel komponen](docs/demo.gif)
+
+Versi video: [docs/demo.mp4](docs/demo.mp4)
+
 ## Build dan pemasangan lokal
 
 Dari root repositori: `npm install`, `node build.mjs`, lalu

@@ -1,0 +1,1933 @@
+/*
+ * Circuit Lab (M0). Namespace: as-lab-*. Dev-only, mounted on /internal.
+ * Colour comes only from semantic theme tokens — no raw values live here.
+ *
+ * The instrument reads like the rest of ARSTEMA (the nameplate/datasheet
+ * identity): flat surfaces, ruled borders, tabular figures, and the single
+ * measurement accent reserved for the value that was actually measured — here,
+ * the current.
+ */
+
+/* Fluid workspace (M3-UX1): fills its container — no 72rem lock. The board takes
+ * the extra room; reading/status widths are bounded so an ultrawide never leaves a
+ * small board marooned in the middle. */
+:where(.arstema-wiring) .as-lab {
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: clamp(0.75rem, 0.35rem + 1.6vw, 1.75rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--as-space-md, 1rem);
+  color: var(--as-text-primary);
+  font-family: var(--as-font-sans);
+}
+
+/* Standalone consumers cannot rely on the host's global box-sizing reset. */
+:where(.arstema-wiring) .as-lab__examples { min-width: 0; max-width: 100%; }
+:where(.arstema-wiring) .as-lab__examples-select { min-width: 0; width: 100%; max-width: 100%; box-sizing: border-box; }
+
+/* --- Head row + collapsible intro (M3-UX1) ------------------------------- */
+
+:where(.arstema-wiring) .as-lab__head-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+:where(.arstema-wiring) .as-lab__head-titles {
+  min-width: 0;
+}
+
+:where(.arstema-wiring) .as-lab__intro-toggle {
+  flex: 0 0 auto;
+}
+
+/* Concise by default: the full intro/goal live in the DOM but are revealed only
+ * when expanded (educational text is never removed). Focus mode hides the head. */
+:where(.arstema-wiring) .as-lab__intro-body {
+  display: none;
+}
+
+:where(.arstema-wiring) .as-lab[data-intro-open] .as-lab__intro-body {
+  display: block;
+}
+
+:where(.arstema-wiring) .as-lab[data-focus] .as-lab__head {
+  display: none;
+}
+
+/* --- Head ---------------------------------------------------------------- */
+
+:where(.arstema-wiring) .as-lab__eyebrow {
+  margin: 0;
+  font-family: var(--as-font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--as-text-muted);
+}
+
+:where(.arstema-wiring) .as-lab__title {
+  margin: 0.25rem 0 0;
+  font-family: var(--as-font-mono);
+  font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+:where(.arstema-wiring) .as-lab__intro {
+  margin: 0.5rem 0 0;
+  max-width: 60ch;
+  line-height: 1.6;
+  color: var(--as-text-secondary);
+  overflow-wrap: anywhere;
+}
+
+:where(.arstema-wiring) .as-lab__goal {
+  margin: 0.75rem 0 0;
+  max-width: 60ch;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--as-border-default);
+  border-left: 3px solid var(--as-accent);
+  background: var(--as-surface-muted);
+  line-height: 1.55;
+  font-size: 0.9375rem;
+}
+
+:where(.arstema-wiring) .as-lab__goal-label {
+  font-family: var(--as-font-mono);
+  font-weight: 600;
+  color: var(--as-text-primary);
+}
+
+/* --- Toolbar / palette --------------------------------------------------- */
+
+:where(.arstema-wiring) .as-lab__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--as-space-md, 1rem);
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+:where(.arstema-wiring) .as-lab__palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+:where(.arstema-wiring) .as-lab__palette-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+:where(.arstema-wiring) .as-lab__palette-search {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid var(--as-border-strong);
+  border-radius: 12px;
+  background: var(--as-surface-elevated);
+  color: var(--as-text-secondary);
+}
+
+:where(.arstema-wiring) .as-lab__palette-search:focus-within {
+  border-color: var(--as-accent);
+}
+
+:where(.arstema-wiring) .as-lab__palette-search-icon {
+  flex: 0 0 auto;
+  margin-right: 8px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+:where(.arstema-wiring) .as-lab__palette-search input {
+  min-width: 0;
+  flex: 1 1 auto;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--as-text-primary);
+  font: inherit;
+  font-size: 13px;
+}
+
+:where(.arstema-wiring) .as-lab__palette-search input::-webkit-search-cancel-button {
+  display: none;
+}
+
+:where(.arstema-wiring) .as-lab__palette-search button {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--as-text-secondary);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab__palette-empty {
+  flex: 1 1 100%;
+  margin: 12px 0;
+  color: var(--as-text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Horizontal category chips; scroll (not wrap) on narrow screens. */
+:where(.arstema-wiring) .as-lab__chips {
+  display: flex;
+  gap: 0.375rem;
+  overflow-x: auto;
+  padding-bottom: 0.125rem;
+  scrollbar-width: thin;
+}
+
+:where(.arstema-wiring) .as-lab__chip {
+  flex: 0 0 auto;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--as-border-strong);
+  border-radius: 999px;
+  background: var(--as-surface-elevated);
+  color: var(--as-text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab__chip[aria-pressed='true'] {
+  border-color: var(--as-accent);
+  background: var(--as-accent-subtle);
+  color: var(--as-text-primary);
+}
+
+:where(.arstema-wiring) .as-lab__tool-cell {
+  position: relative;
+}
+
+/* Uniform compact tile: icon + short name only. The hint lives in the tooltip. */
+:where(.arstema-wiring) .as-lab__tool {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  width: 6rem;
+  height: 4.5rem;
+  padding: 0.4rem;
+  text-align: center;
+  border: 1px solid var(--as-border-strong);
+  border-radius: var(--as-radius-sm, 4px);
+  background: var(--as-surface-elevated);
+  color: var(--as-text-primary);
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab__tool[aria-pressed='true'] {
+  border-color: var(--as-accent);
+  background: var(--as-accent-subtle);
+}
+
+:where(.arstema-wiring) .as-lab__tool-icon {
+  font-family: var(--as-font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+:where(.arstema-wiring) .as-lab__tool-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.15;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Desktop hover tooltip: revealed after a ~700 ms delay, floats ABOVE the tile
+ * (never over the board below it), and never intercepts the arm click. */
+:where(.arstema-wiring) .as-lab__tool-tip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.4rem);
+  transform: translateX(-50%);
+  z-index: 40;
+  width: max-content;
+  max-width: 16rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--as-border-strong);
+  border-radius: var(--as-radius-sm, 4px);
+  background: var(--as-surface-elevated);
+  color: var(--as-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: left;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.12s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :where(.arstema-wiring) .as-lab__tool:hover .as-lab__tool-tip,
+  :where(.arstema-wiring) .as-lab__tool:focus-visible .as-lab__tool-tip {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 700ms;
+  }
+}
+
+/* Touch/keyboard info affordance (no long-press) in the tile corner. */
+:where(.arstema-wiring) .as-lab__tool-info {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.4rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 999px;
+  border: 1px solid var(--as-border-strong);
+  background: var(--as-surface-primary);
+  color: var(--as-text-secondary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* Where a real hover tooltip works, keep the info button out of the way until the
+ * tile is hovered/focused, so tiles stay clean on the desktop. */
+@media (hover: hover) and (pointer: fine) {
+  :where(.arstema-wiring) .as-lab__tool-info {
+    opacity: 0;
+  }
+  :where(.arstema-wiring) .as-lab__tool-cell:hover .as-lab__tool-info,
+  :where(.arstema-wiring) .as-lab__tool-info:focus-visible {
+    opacity: 1;
+  }
+}
+
+:where(.arstema-wiring) .as-lab-info__title {
+  font-weight: 700;
+}
+
+:where(.arstema-wiring) .as-lab-info__facts {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.8fr) minmax(0, 1.4fr);
+  gap: 6px 12px;
+  margin: 12px 0;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+:where(.arstema-wiring) .as-lab-info__facts dt {
+  color: var(--as-text-secondary);
+}
+
+:where(.arstema-wiring) .as-lab-info__facts dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--as-text-primary);
+}
+
+:where(.arstema-wiring) .as-lab-info__datasheet {
+  color: var(--as-accent);
+  font-size: 12px;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+:where(.arstema-wiring) .as-lab__actions,
+:where(.arstema-wiring) .as-lab__run {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+:where(.arstema-wiring) .as-lab__btn {
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid var(--as-border-strong);
+  border-radius: var(--as-radius-sm, 4px);
+  background: var(--as-surface-elevated);
+  color: var(--as-text-primary);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab__btn--primary {
+  border-color: var(--as-accent);
+  background: var(--as-accent);
+  color: var(--as-accent-contrast);
+}
+
+:where(.arstema-wiring) .as-lab__btn--erase[aria-pressed='true'] {
+  border-color: var(--as-status-danger);
+  background: var(--as-status-danger-surface);
+  color: var(--as-status-danger);
+}
+
+:where(.arstema-wiring) .as-lab__btn:disabled {
+  border-color: var(--as-disabled-border, var(--as-border-default));
+  background: var(--as-disabled-bg);
+  color: var(--as-disabled-text);
+  cursor: not-allowed;
+}
+
+:where(.arstema-wiring) .as-lab__property-select {
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--as-border-strong);
+  border-radius: var(--as-radius-sm, 4px);
+  background: var(--as-surface-elevated);
+  color: var(--as-text-primary);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+:where(.arstema-wiring) .as-lab__guidance {
+  margin: 0;
+  flex: 1 1 16rem;
+  min-width: 0;
+  font-size: 0.8125rem;
+  color: var(--as-text-secondary);
+}
+
+:where(.arstema-wiring) .as-lab__layout-warning {
+  margin: 0;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--as-status-warning) 60%, var(--as-border));
+  border-radius: var(--as-radius-sm, 4px);
+  background: color-mix(in srgb, var(--as-status-warning) 12%, var(--as-surface-primary));
+  color: var(--as-text-primary);
+  font-size: 0.8125rem;
+}
+
+/* --- Stage --------------------------------------------------------------- */
+
+:where(.arstema-wiring) .as-lab__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 20rem);
+  gap: var(--as-space-md, 1rem);
+  align-items: start;
+}
+
+@media (max-width: 52rem) {
+  :where(.arstema-wiring) .as-lab__stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* P1.2: the main column — zoom controls stacked over the board. `min-width:0` lets it
+   shrink below the board's natural px (so the board scrolls inside its wrapper instead
+   of forcing the grid wider). */
+:where(.arstema-wiring) .as-lab__workspace {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+:where(.arstema-wiring) .as-lab__boards {
+  min-width: 0;
+  display: grid;
+  /*
+   * ONE board at a time, at every width. The two projections were shown side
+   * by side on wide screens with the tabs hidden below 52rem, which made the
+   * layout — and the mental model — differ by viewport. They are separate
+   * workspaces now, so the tab decides which one you are looking at.
+   */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--as-space-sm, 0.75rem);
+}
+
+:where(.arstema-wiring) .as-lab__board-panel:not([data-active]) {
+  display: none;
+}
+
+:where(.arstema-wiring) .as-lab__board-panel {
+  min-width: 0;
+}
+
+:where(.arstema-wiring) .as-lab__board-title {
+  min-height: 2.75rem;
+  padding: 0.45rem 0.65rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid var(--as-border-default);
+  border-bottom: 0;
+  border-radius: var(--as-radius-sm, 4px) var(--as-radius-sm, 4px) 0 0;
+  background: var(--as-surface-muted);
+  font-family: var(--as-font-mono);
+}
+
+:where(.arstema-wiring) .as-lab__board-title span {
+  color: var(--as-text-muted);
+  font-size: 0.7rem;
+  text-align: right;
+}
+
+:where(.arstema-wiring) .as-lab__board-tabs {
+  display: flex;
+  gap: 0.35rem;
+  margin-bottom: 0.4rem;
+}
+
+:where(.arstema-wiring) .as-lab__board-tabs button {
+  min-height: 2.25rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--as-border-default);
+  border-radius: var(--as-radius-sm, 4px);
+  background: var(--as-surface-elevated);
+  color: var(--as-text-primary);
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab__board-tabs button[aria-selected='true'] {
+  border-color: var(--as-accent);
+  box-shadow: inset 0 -2px 0 var(--as-accent);
+}
+
+/* Viewport-height workspace (M3-UX1): the wrapper gets a real height derived from
+ * the viewport (dvh) with a safe laptop minimum; the board scales to FILL it while
+ * keeping its aspect ratio (the SVG viewBox + default "meet" letterboxing). Cells
+ * are NOT enlarged manually and the geometry/viewBox is unchanged. Resizing the
+ * window / moving monitors reflows in real time — pure CSS, no observer. */
+:where(.arstema-wiring) .as-lab__board-wrap {
+  border: 1px solid var(--as-border-default);
+  border-radius: var(--as-radius-sm, 4px);
+  background: var(--as-surface-primary);
+  padding: 0.5rem;
+  overflow: auto;
+  /* The SVG and the coordinate rulers are independent scroll children. Keeping
+     this as a normal positioned scroll field lets the rulers stick to its edges
+     while the electrical drawing pans below them. */
+  display: block;
+  position: relative;
+  /* Bug 2 camera: the visible extent grows so the board always fills (≥) the wrapper,
+     so it never needs centring — align to the START corner so native scroll can reach
+     EVERY edge. (Centering an overflowing flex child clips its start edge with no scroll
+     room to recover it, which hid the top-left terminals.) */
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: clamp(20rem, 62dvh, 60rem);
+  min-height: 20rem;
+}
+
+:where(.arstema-wiring) .as-lab__board-panel .as-lab__board-wrap {
+  border-radius: 0 0 var(--as-radius-sm, 4px) var(--as-radius-sm, 4px);
+}
+
+:where(.arstema-wiring) .as-lab[data-focus] .as-lab__board-wrap {
+  height: clamp(24rem, 82dvh, 72rem);
+}
+
+/* --- SVG board ----------------------------------------------------------- */
+
+:where(.arstema-wiring) .as-lab-board {
+  display: block;
+  /* Size is driven by the zoom transform (px = board size × zoom); the wrapper scrolls
+     when the board is larger than the viewport. No auto-margin centring — the Bug 2
+     camera keeps the board ≥ the wrapper, and the wrapper aligns it to the start corner
+     so scroll reaches every edge (auto-margins would re-centre an overflow and clip the
+     start edge). */
+  margin: 0;
+  flex: none;
+  /* P1.2: override the global `svg { max-width:100% }` reset — otherwise the board is
+     implicitly shrunk to the wrapper width (100% would not be its natural size). The
+     no-shrink contract: at 100% the board is its true px and the wrapper scrolls. */
+  max-width: none;
+  max-height: none;
+  /* P1-B: the canvas is a diagram, not text — no caret, no text selection, and no
+     browser touch gestures stealing drags/wiring. Panels/inputs outside the SVG keep
+     their normal selectable behaviour (this rule is scoped to the board only). */
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+/* CAD-style rulers live outside the SVG, therefore numbers never pan into the
+ * work area with the circuit. X follows horizontal content but is fixed to the
+ * top edge; Y follows vertical content but is fixed to the left edge. */
+:where(.arstema-wiring) .as-lab-board__ruler-layer {
+  position: absolute;
+  inset: 0 auto auto 0;
+  z-index: 4;
+  pointer-events: none;
+  overflow: visible;
+}
+
+:where(.arstema-wiring) .as-lab-board__ruler {
+  box-sizing: border-box;
+  color: var(--as-text-muted);
+  font-family: var(--as-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+}
+
+:where(.arstema-wiring) .as-lab-board__ruler span {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  min-width: 1.3rem;
+  min-height: 1.3rem;
+  background: color-mix(in srgb, var(--as-surface-elevated) 93%, transparent);
+}
+
+:where(.arstema-wiring) .as-lab-board__ruler--x {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  width: 100%;
+  height: 1.3rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--as-border-default) 72%, transparent);
+}
+
+:where(.arstema-wiring) .as-lab-board__ruler--x span {
+  top: 0;
+  transform: translateX(-50%);
+  border-inline: 1px solid color-mix(in srgb, var(--as-border-default) 35%, transparent);
+}
+
+:where(.arstema-wiring) .as-lab-board__ruler--y {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  width: 1.3rem;
+  height: 100%;
+  border-right: 1px solid color-mix(in srgb, var(--as-border-default) 72%, transparent);
+}
+
+:where(.arstema-wiring) .as-lab-board__ruler--y span {
+  left: 0;
+  transform: translateY(-50%);
+  border-block: 1px solid color-mix(in srgb, var(--as-border-default) 35%, transparent);
+}
+
+:where(.arstema-wiring) .as-lab-board[data-pinch-preview='true'] {
+  /* The preview matrix uses CSS pixels, never the SVG viewBox coordinate system. */
+  transform-box: border-box;
+}
+
+/* A deliberate long-press arms component movement before the first snapped-cell
+   change. This feedback is important on touch screens: a normal swipe still pans,
+   while the accented body confirms that the held component—not the board camera—
+   will move. Its connected conductors are then re-routed from the moved terminals. */
+:where(.arstema-wiring) .as-lab-board [data-dragging] {
+  cursor: grabbing;
+  filter: drop-shadow(0 0 5px var(--as-accent));
+}
+
+:where(.arstema-wiring) .as-lab-board__routing-pending rect {
+  fill: color-mix(in srgb, var(--as-surface-elevated) 92%, transparent);
+  stroke: var(--as-border-default);
+}
+
+:where(.arstema-wiring) .as-lab-board__routing-pending text {
+  fill: var(--as-text-muted);
+  font-family: var(--as-font-mono);
+  font-size: 11px;
+}
+
+/* P1-C zoom controls (display only). */
+:where(.arstema-wiring) .as-lab__zoom {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+:where(.arstema-wiring) .as-lab__zoom-btn {
+  width: 1.75rem;
+  height: 1.75rem;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  line-height: 1;
+  border: 1px solid var(--as-border-default);
+  border-radius: var(--as-radius-sm, 4px);
+  background: var(--as-surface-elevated);
+  color: var(--as-text-primary);
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab__zoom-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+:where(.arstema-wiring) .as-lab__zoom-pct {
+  min-width: 3rem;
+  text-align: center;
+  font-family: var(--as-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85rem;
+  color: var(--as-text-muted);
+}
+
+:where(.arstema-wiring) .as-lab-board__field {
+  fill: var(--as-surface-elevated);
+}
+
+:where(.arstema-wiring) .as-lab-board[data-faulted] .as-lab-board__field {
+  fill: var(--as-status-danger-surface);
+}
+
+:where(.arstema-wiring) .as-lab-board__grid {
+  stroke: var(--as-grid-line);
+  stroke-width: 1;
+}
+
+:where(.arstema-wiring) .as-lab-board__cell {
+  fill: var(--as-accent-subtle);
+  fill-opacity: 0.35;
+  stroke: var(--as-accent);
+  stroke-dasharray: 4 3;
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab-board__cell:hover,
+:where(.arstema-wiring) .as-lab-board__cell:focus-visible {
+  fill-opacity: 0.7;
+  outline: none;
+}
+
+/*
+ * Wires read as conductors: thicker than the 1px grid, rounded caps and elbows.
+ * Every physical net receives a stable, high-contrast colour. Safety designations
+ * still win: neutral is always blue and PE is always green with a yellow stripe.
+ * No ordinary net uses the PE stripe pattern.
+ */
+:where(.arstema-wiring) .as-lab-board__wire {
+  fill: none;
+  stroke: var(--as-annotation);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+:where(.arstema-wiring) .as-lab-board__wire[data-net-color='0'],
+:where(.arstema-wiring) .as-lab-board__arrow[data-net-color='0'],
+:where(.arstema-wiring) .as-lab-board__net-badge[data-net-color='0'] { --as-wire-net-color: var(--as-wire-net-0); }
+:where(.arstema-wiring) .as-lab-board__wire[data-net-color='1'],
+:where(.arstema-wiring) .as-lab-board__arrow[data-net-color='1'],
+:where(.arstema-wiring) .as-lab-board__net-badge[data-net-color='1'] { --as-wire-net-color: var(--as-wire-net-1); }
+:where(.arstema-wiring) .as-lab-board__wire[data-net-color='2'],
+:where(.arstema-wiring) .as-lab-board__arrow[data-net-color='2'],
+:where(.arstema-wiring) .as-lab-board__net-badge[data-net-color='2'] { --as-wire-net-color: var(--as-wire-net-2); }
+:where(.arstema-wiring) .as-lab-board__wire[data-net-color='3'],
+:where(.arstema-wiring) .as-lab-board__arrow[data-net-color='3'],
+:where(.arstema-wiring) .as-lab-board__net-badge[data-net-color='3'] { --as-wire-net-color: var(--as-wire-net-3); }
+:where(.arstema-wiring) .as-lab-board__wire[data-net-color='4'],
+:where(.arstema-wiring) .as-lab-board__arrow[data-net-color='4'],
+:where(.arstema-wiring) .as-lab-board__net-badge[data-net-color='4'] { --as-wire-net-color: var(--as-wire-net-4); }
+:where(.arstema-wiring) .as-lab-board__wire[data-net-color='5'],
+:where(.arstema-wiring) .as-lab-board__arrow[data-net-color='5'],
+:where(.arstema-wiring) .as-lab-board__net-badge[data-net-color='5'] { --as-wire-net-color: var(--as-wire-net-5); }
+:where(.arstema-wiring) .as-lab-board__wire[data-net-color='6'],
+:where(.arstema-wiring) .as-lab-board__arrow[data-net-color='6'],
+:where(.arstema-wiring) .as-lab-board__net-badge[data-net-color='6'] { --as-wire-net-color: var(--as-wire-net-6); }
+:where(.arstema-wiring) .as-lab-board__wire[data-net-color='7'],
+:where(.arstema-wiring) .as-lab-board__arrow[data-net-color='7'],
+:where(.arstema-wiring) .as-lab-board__net-badge[data-net-color='7'] { --as-wire-net-color: var(--as-wire-net-7); }
+:where(.arstema-wiring) .as-lab-board__wire[data-net-color='8'],
+:where(.arstema-wiring) .as-lab-board__arrow[data-net-color='8'],
+:where(.arstema-wiring) .as-lab-board__net-badge[data-net-color='8'] { --as-wire-net-color: var(--as-wire-net-8); }
+:where(.arstema-wiring) .as-lab-board__wire[data-net-color='9'],
+:where(.arstema-wiring) .as-lab-board__arrow[data-net-color='9'],
+:where(.arstema-wiring) .as-lab-board__net-badge[data-net-color='9'] { --as-wire-net-color: var(--as-wire-net-9); }
+:where(.arstema-wiring) .as-lab-board__wire[data-net-color='10'],
+:where(.arstema-wiring) .as-lab-board__arrow[data-net-color='10'],
+:where(.arstema-wiring) .as-lab-board__net-badge[data-net-color='10'] { --as-wire-net-color: var(--as-wire-net-10); }
+:where(.arstema-wiring) .as-lab-board__wire[data-net-color='11'],
+:where(.arstema-wiring) .as-lab-board__arrow[data-net-color='11'],
+:where(.arstema-wiring) .as-lab-board__net-badge[data-net-color='11'] { --as-wire-net-color: var(--as-wire-net-11); }
+
+:where(.arstema-wiring) .as-lab-board__wire[data-net-color] {
+  stroke: var(--as-wire-net-color);
+}
+
+:where(.arstema-wiring) .as-lab-board__wire[data-conductor='live']:not([data-net-color]) {
+  stroke: var(--as-status-danger);
+}
+
+:where(.arstema-wiring) .as-lab-board__wire[data-conductor='neutral'] {
+  stroke: var(--as-status-info);
+}
+
+:where(.arstema-wiring) .as-lab-board__wire[data-conductor='pe'] {
+  stroke: var(--as-conductor-pe-base);
+  stroke-width: 4;
+}
+
+:where(.arstema-wiring) .as-lab-board__wire-pe-stripe {
+  stroke: var(--as-conductor-pe-stripe);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 8 7;
+}
+
+:where(.arstema-wiring) .as-lab-board__wire[data-conductor='ambiguous']:not([data-net-color]) {
+  stroke: var(--as-annotation);
+}
+
+/* Pack 2A: three-phase wire colours by node phase (semantic tokens, light+dark).
+   Colour is NOT the only cue — source terminals also carry L1/L2/L3/N labels. */
+:where(.arstema-wiring) .as-lab-board__wire[data-phase='r'] {
+  stroke: var(--as-status-danger); /* R — red, consistent with 1-phase live */
+}
+:where(.arstema-wiring) .as-lab-board__wire[data-phase='s'] {
+  stroke: var(--as-status-warning); /* S — amber */
+}
+:where(.arstema-wiring) .as-lab-board__wire[data-phase='t'] {
+  stroke: var(--as-wire-net-4); /* T — green, solid; never the PE stripe pattern */
+}
+:where(.arstema-wiring) .as-lab-board__wire[data-phase='n'] {
+  stroke: var(--as-status-info); /* N — blue, consistent with 1-phase neutral */
+}
+:where(.arstema-wiring) .as-lab-board__wire[data-phase='energized'] {
+  opacity: 1;
+}
+:where(.arstema-wiring) .as-lab-board__wire[data-phase='inactive'] {
+  opacity: 0.78;
+}
+:where(.arstema-wiring) .as-lab-board__wire[data-phase='fault'] {
+  stroke: var(--as-status-danger);
+  stroke-dasharray: 6 5; /* dashed → distinct from a solid live R-phase wire */
+}
+
+/* (Bug1) 3-phase current animation is the legacy arrow markers — the same as
+   1-phase — not a moving dash; the removed data-flowing rule lived here. */
+
+/* A real junction (same electrical node): a solder dot, never a hop. */
+:where(.arstema-wiring) .as-lab-board__junction {
+  fill: var(--as-text-primary);
+}
+
+:where(.arstema-wiring) .as-lab-board__dot {
+  fill: var(--as-accent);
+}
+
+/* Moving flow arrow — points the way current runs (L → loads → N). */
+:where(.arstema-wiring) .as-lab-board__arrow {
+  fill: var(--as-accent);
+}
+
+:where(.arstema-wiring) .as-lab-board__arrow[data-net-color] {
+  fill: var(--as-wire-net-color);
+}
+
+:where(.arstema-wiring) .as-lab-board__arrow[data-conductor='neutral'],
+:where(.arstema-wiring) .as-lab-board__arrow[data-phase='n'] {
+  fill: var(--as-status-info);
+}
+
+:where(.arstema-wiring) .as-lab-board__arrow[data-conductor='live']:not([data-net-color]),
+:where(.arstema-wiring) .as-lab-board__arrow[data-phase='r'] {
+  fill: var(--as-status-danger);
+}
+
+:where(.arstema-wiring) .as-lab-board__arrow[data-phase='s'] {
+  fill: var(--as-status-warning);
+}
+
+:where(.arstema-wiring) .as-lab-board__arrow[data-phase='t'] {
+  fill: var(--as-wire-net-4);
+}
+
+:where(.arstema-wiring) .as-lab-board__arrow[data-conductor='pe'] {
+  fill: var(--as-conductor-pe-stripe);
+  stroke: var(--as-conductor-pe-base);
+  stroke-width: 1;
+}
+
+:where(.arstema-wiring) .as-lab-board__arrow[data-fault] {
+  fill: var(--as-status-danger);
+}
+
+/* Preview wire while pulling from a terminal toward the cursor. */
+:where(.arstema-wiring) .as-lab-board__preview {
+  stroke: var(--as-annotation);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 5 4;
+  fill: none;
+}
+
+:where(.arstema-wiring) .as-lab-board__dot[data-fault] {
+  fill: var(--as-status-danger);
+}
+
+:where(.arstema-wiring) .as-lab-board__body {
+  fill: var(--as-surface-primary);
+  stroke: var(--as-border-strong);
+  stroke-width: 2;
+}
+
+:where(.arstema-wiring) .as-lab-board__virtual[data-draggable] {
+  cursor: grab;
+}
+
+/* Papan kiri: gambar perangkat lapangan 2D. Semua viewBox menyertakan badan alat
+   secara utuh; koordinat terminal berasal dari kanvas sumber gambar yang sama. */
+:where(.arstema-wiring) .as-lab-board__field-asset {
+  overflow: hidden;
+}
+
+:where(.arstema-wiring) .as-lab-board__field-asset-image {
+  opacity: 0.98;
+}
+
+:where(.arstema-wiring) .as-lab-board__field-asset-placeholder {
+  fill: color-mix(in srgb, var(--as-surface-primary) 86%, var(--as-text-muted));
+  stroke: var(--as-border-strong);
+  stroke-width: 18;
+}
+
+:where(.arstema-wiring) .as-lab-board__field-instrument[data-active] .as-lab-board__field-asset-image,
+:where(.arstema-wiring) .as-lab-board__field-instrument[data-status='running'] .as-lab-board__field-asset-image {
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--as-accent) 68%, transparent));
+}
+
+:where(.arstema-wiring) .as-lab-board__field-instrument[data-status='heating'] .as-lab-board__field-asset-image {
+  filter: drop-shadow(
+    0 0 4px color-mix(in srgb, var(--as-status-warning) 58%, transparent)
+  );
+}
+
+:where(.arstema-wiring) .as-lab-board__field-instrument[data-status='tripped'] .as-lab-board__field-asset-image {
+  filter: drop-shadow(
+    0 0 6px color-mix(in srgb, var(--as-status-danger) 74%, transparent)
+  );
+}
+
+:where(.arstema-wiring) .as-lab-board__field-state-overlay {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 1.5;
+}
+
+:where(.arstema-wiring) .as-lab-board__field-state-overlay[data-state='closed'],
+:where(.arstema-wiring) .as-lab-board__field-state-overlay[data-state='on'],
+:where(.arstema-wiring) .as-lab-board__field-state-overlay[data-state='pressed'],
+:where(.arstema-wiring) .as-lab-board__field-state-overlay[data-state='actuated'] {
+  fill: color-mix(in srgb, var(--as-accent) 13%, transparent);
+  stroke: color-mix(in srgb, var(--as-accent) 72%, transparent);
+}
+
+:where(.arstema-wiring) .as-lab-board__field-state-overlay[data-state='open'],
+:where(.arstema-wiring) .as-lab-board__field-state-overlay[data-state='off'],
+:where(.arstema-wiring) .as-lab-board__field-state-overlay[data-state='blown'] {
+  stroke: color-mix(in srgb, var(--as-status-danger) 78%, transparent);
+  stroke-dasharray: 3 2;
+}
+
+:where(.arstema-wiring) .as-lab-board__field-glow {
+  fill: color-mix(in srgb, var(--as-status-warning) 28%, transparent);
+  stroke: color-mix(in srgb, var(--as-status-warning) 80%, transparent);
+  stroke-width: 2;
+  filter: drop-shadow(0 0 7px var(--as-status-warning));
+}
+
+:where(.arstema-wiring) .as-lab-board__field-energized-overlay {
+  fill: color-mix(in srgb, var(--as-accent) 12%, transparent);
+  stroke: color-mix(in srgb, var(--as-accent) 74%, transparent);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--as-accent) 62%, transparent));
+}
+
+:where(.arstema-wiring) .as-lab-board__field-trip-overlay {
+  fill: color-mix(in srgb, var(--as-status-danger) 12%, transparent);
+  stroke: var(--as-status-danger);
+  stroke-width: 2;
+  stroke-dasharray: 4 2;
+}
+
+:where(.arstema-wiring) .as-lab-board__field-motor-running {
+  fill: none;
+  stroke: var(--as-accent);
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: as-lab-field-motor-spin 900ms linear infinite;
+}
+
+@keyframes as-lab-field-motor-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+:where(.arstema-wiring) .as-lab-board__field-aux-label {
+  fill: var(--as-text-primary);
+  stroke: var(--as-surface-primary);
+  stroke-width: 2px;
+  paint-order: stroke fill;
+  font-family: var(--as-font-mono);
+  font-size: 6px;
+  font-weight: 850;
+}
+
+:where(.arstema-wiring) .as-lab-board__physical-terminal-anchor {
+  fill: transparent;
+  stroke: color-mix(in srgb, var(--as-terminal-aux-ring) 46%, transparent);
+  stroke-width: 1;
+}
+
+:where(.arstema-wiring) .as-lab-board__virtual-actuator {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 1.5;
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab-board__virtual[data-pressed] .as-lab-board__virtual-actuator {
+  fill: color-mix(in srgb, var(--as-accent) 14%, transparent);
+  stroke: var(--as-accent);
+  transform: translateY(2px);
+}
+
+:where(.arstema-wiring) .as-lab-board__product-control-hit[data-pressed] {
+  fill: color-mix(in srgb, var(--as-accent) 16%, transparent);
+  stroke: var(--as-accent);
+  transform: translateY(2px);
+}
+
+:where(.arstema-wiring) .as-lab-board__switch[data-active] [data-pilot-light] {
+  fill: color-mix(in srgb, var(--as-status-warning) 45%, transparent);
+  stroke: var(--as-status-warning);
+}
+
+:where(.arstema-wiring) .as-lab-board__virtual-breaker-handle {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 1.5;
+  cursor: pointer;
+}
+
+/* The source bitmap is intentionally static; this opaque SVG mechanism covers
+ * its printed handle and becomes the single visible ON/OFF/TRIP state. */
+:where(.arstema-wiring) .as-lab-board__virtual-breaker-track {
+  fill: color-mix(in srgb, var(--as-surface-elevated) 88%, #27323a);
+  stroke: color-mix(in srgb, var(--as-text-primary) 46%, #111);
+  stroke-width: 1.2;
+}
+
+:where(.arstema-wiring) .as-lab-board__virtual-breaker-lever {
+  fill: #596166;
+  stroke: #202629;
+  stroke-width: 1.4;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    transform 190ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    fill 150ms ease;
+}
+
+:where(.arstema-wiring) .as-lab-board__virtual-breaker-mechanism[data-breaker-position='on']
+  .as-lab-board__virtual-breaker-lever {
+  fill: color-mix(in srgb, var(--as-accent) 42%, #596166);
+  transform: translateY(-52%);
+}
+
+:where(.arstema-wiring) .as-lab-board__virtual-breaker-mechanism[data-breaker-position='off']
+  .as-lab-board__virtual-breaker-lever {
+  transform: translateY(52%);
+}
+
+:where(.arstema-wiring) .as-lab-board__virtual-breaker-mechanism[data-breaker-position='tripped']
+  .as-lab-board__virtual-breaker-lever {
+  fill: color-mix(in srgb, var(--as-status-danger) 52%, #596166);
+  transform: translateY(0);
+}
+
+:where(.arstema-wiring) .as-lab-board__virtual-breaker-state-text {
+  fill: var(--as-text-primary);
+  stroke: var(--as-surface-primary);
+  stroke-width: 1.5px;
+  paint-order: stroke fill;
+  font-family: var(--as-font-mono);
+  font-size: 5px;
+  font-weight: 900;
+}
+
+:where(.arstema-wiring) .as-lab-board__virtual-timer-dial {
+  fill: #ff851b;
+  stroke: #42220b;
+  stroke-width: 1.5;
+}
+
+:where(.arstema-wiring) .as-lab-board__virtual-timer-hand {
+  stroke: #fff7ed;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.55));
+  transition: transform 80ms linear;
+}
+
+:where(.arstema-wiring) .as-lab-board__virtual-timer-value {
+  fill: #16100b;
+  font-family: var(--as-font-mono);
+  font-size: 6px;
+  font-weight: 900;
+}
+
+:where(.arstema-wiring) .as-lab-board__timer[data-selected] .as-lab-board__virtual-timer-dial {
+  stroke: var(--as-accent);
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--as-accent) 70%, transparent));
+}
+
+:where(.arstema-wiring) .as-lab-board__virtual-breaker-handle:focus-visible,
+:where(.arstema-wiring) .as-lab-board__virtual-actuator:focus-visible {
+  stroke: var(--as-accent);
+}
+
+:where(.arstema-wiring) .as-lab-board__net-badge text {
+  fill: var(--as-wire-net-color, var(--as-text-primary));
+  stroke: var(--as-surface-primary);
+  stroke-width: 2px;
+  paint-order: stroke fill;
+  font-family: var(--as-font-mono);
+  font-size: 8px;
+  font-weight: 800;
+}
+
+:where(.arstema-wiring) .as-lab-board__net-badge--wire text {
+  font-size: 9px;
+}
+
+:where(.arstema-wiring) .as-lab-board__wire-label text {
+  font-size: 8.5px;
+  dominant-baseline: auto;
+}
+
+:where(.arstema-wiring) .as-lab-board__wire-label[data-label-orientation='vertical'] text {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  dominant-baseline: middle;
+}
+
+:where(.arstema-wiring) .as-lab-board__breaker-inline-label {
+  display: none;
+}
+
+:where(.arstema-wiring) .as-lab-board__breaker-annotation rect {
+  fill: var(--as-surface-primary);
+  stroke: var(--as-border-strong);
+  stroke-width: 0.8;
+}
+
+:where(.arstema-wiring) .as-lab-board__breaker-annotation text {
+  fill: var(--as-text-primary);
+  font-family: var(--as-font-mono);
+  font-size: 7px;
+  font-weight: 800;
+}
+
+:where(.arstema-wiring) .as-lab-board__breaker-annotation text[data-rating] {
+  fill: var(--as-text-secondary);
+  font-size: 6.5px;
+}
+
+/* Draggable components show a grab cursor in the neutral (non-tool) state. */
+:where(.arstema-wiring) .as-lab-board__source[data-draggable],
+:where(.arstema-wiring) .as-lab-board__lamp[data-draggable],
+:where(.arstema-wiring) .as-lab-board__switch[data-draggable] {
+  cursor: grab;
+}
+
+:where(.arstema-wiring) .as-lab-board__glyph-value {
+  fill: var(--as-text-primary);
+  font-family: var(--as-font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  text-anchor: middle;
+  /* P1-A: decorative labels must never shadow the body's select target — a click on
+     the rating/label text passes through to the full-body select rect below. */
+  pointer-events: none;
+}
+
+:where(.arstema-wiring) .as-lab-board__glyph-sub {
+  fill: var(--as-text-muted);
+  font-family: var(--as-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 2.5;
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal--physical-hit {
+  fill: transparent;
+  stroke: transparent;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal-face {
+  fill: color-mix(in srgb, var(--as-surface-elevated) 76%, transparent);
+  stroke: color-mix(in srgb, var(--as-border-strong) 84%, transparent);
+  stroke-width: 1.2;
+  pointer-events: none;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal-face--iec {
+  fill: color-mix(in srgb, var(--as-surface-elevated) 92%, transparent);
+  stroke: var(--as-border-strong);
+  stroke-width: 2;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal-face[data-pending] {
+  fill: color-mix(in srgb, var(--as-accent) 24%, var(--as-surface-elevated));
+  stroke: var(--as-accent);
+  stroke-width: 2;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal-unit:has(.as-lab-board__terminal--physical-hit)
+  .as-lab-board__terminal-number {
+  font-size: 5.5px;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal-unit:has(.as-lab-board__terminal--physical-hit)
+  .as-lab-board__terminal-role {
+  font-size: 4.2px;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal-unit:has(.as-lab-board__terminal--physical-hit)
+  .as-lab-board__terminal-designation {
+  font-size: 4.8px;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal-number {
+  fill: var(--as-text-primary);
+  font-family: var(--as-font-mono);
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  pointer-events: none;
+  user-select: none;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal-number[data-long] {
+  font-size: 5.5px;
+  letter-spacing: -0.35px;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal-number[data-functional] {
+  font-size: 5.5px;
+  letter-spacing: -0.15px;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal-role {
+  font-size: 4.5px;
+  font-weight: 900;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal-designation {
+  font-size: 5.5px;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal[data-pending] {
+  fill: transparent;
+  stroke: var(--as-accent-active);
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal-number[data-pending] {
+  fill: var(--as-accent);
+}
+
+/* Merged terminal: a clean junction dot already marks this point, so the stacked
+   circle is hidden (no doubled blob) but stays a click target for wiring. */
+:where(.arstema-wiring) .as-lab-board__terminal[data-merged] {
+  fill-opacity: 0;
+  stroke-opacity: 0;
+  pointer-events: all;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal-face[data-merged] {
+  opacity: 0;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal-number[data-merged] {
+  opacity: 0;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal[data-merged][data-pending] {
+  fill-opacity: 1;
+  stroke-opacity: 1;
+}
+
+:where(.arstema-wiring) .as-lab-board__terminal-number[data-merged][data-pending] {
+  opacity: 1;
+}
+
+:where(.arstema-wiring) .as-lab-board__lamp-fill {
+  fill: var(--as-accent);
+}
+
+:where(.arstema-wiring) .as-lab-board__lamp-cross {
+  stroke: var(--as-border-strong);
+  stroke-width: 1.5;
+}
+
+:where(.arstema-wiring) .as-lab-board__lamp[data-lit] .as-lab-board__lamp-cross {
+  stroke: var(--as-accent-contrast);
+}
+
+:where(.arstema-wiring) .as-lab-board__switch-hit {
+  fill: var(--as-surface-primary);
+  stroke: var(--as-border-strong);
+  stroke-width: 2;
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab-board__pivot {
+  fill: var(--as-text-secondary);
+}
+
+:where(.arstema-wiring) .as-lab-board__lever {
+  stroke: var(--as-text-primary);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+:where(.arstema-wiring) .as-lab-board__switch[data-closed] .as-lab-board__lever {
+  stroke: var(--as-accent);
+}
+
+/* Motor: the body ring changes with its state (running / humming / idle). */
+:where(.arstema-wiring) .as-lab-board__motor[data-status='running'] .as-lab-board__body {
+  stroke: var(--as-status-success);
+}
+
+:where(.arstema-wiring) .as-lab-board__motor[data-status='humming'] .as-lab-board__body {
+  stroke: var(--as-status-warning);
+}
+
+:where(.arstema-wiring) .as-lab-board__cap-lead {
+  stroke: var(--as-border-strong);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+:where(.arstema-wiring) .as-lab-board__cap-plate {
+  stroke: var(--as-border-strong);
+  stroke-width: 3;
+}
+
+/* Indicator: a small pilot lamp, lit green when current flows. */
+:where(.arstema-wiring) .as-lab-board__indicator-fill {
+  fill: var(--as-status-success);
+}
+
+/* Relay: the body ring goes success when the coil is energized. */
+:where(.arstema-wiring) .as-lab-board__relay[data-energized] .as-lab-board__body {
+  stroke: var(--as-status-success);
+}
+
+/* Push button: the cap depresses (accent) while held. */
+:where(.arstema-wiring) .as-lab-board__button-hit {
+  fill: var(--as-surface-primary);
+  stroke: var(--as-border-strong);
+  stroke-width: 2;
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab-board__button-cap {
+  fill: var(--as-surface-interactive);
+  stroke: var(--as-border-strong);
+  stroke-width: 1.5;
+}
+
+:where(.arstema-wiring) .as-lab-board__pushbutton[data-pressed] .as-lab-board__button-cap {
+  fill: var(--as-accent);
+}
+
+:where(.arstema-wiring) .as-lab-board__pushbutton[data-draggable] {
+  cursor: grab;
+}
+
+/* --- Erase mode ---------------------------------------------------------- */
+
+:where(.arstema-wiring) .as-lab-board[data-erase] {
+  cursor: crosshair;
+}
+
+:where(.arstema-wiring) .as-lab-board__erase {
+  fill: var(--as-status-danger-surface);
+  fill-opacity: 0.25;
+  stroke: var(--as-status-danger);
+  stroke-dasharray: 5 3;
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab-board__erase:hover,
+:where(.arstema-wiring) .as-lab-board__erase:focus-visible {
+  fill-opacity: 0.6;
+  outline: none;
+}
+
+:where(.arstema-wiring) .as-lab-board__wire-erase {
+  stroke: var(--as-status-danger);
+  stroke-opacity: 0;
+  stroke-width: 14;
+  stroke-linecap: round;
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab-board__wire-erase:hover,
+:where(.arstema-wiring) .as-lab-board__wire-erase:focus-visible {
+  stroke-opacity: 0.4;
+  outline: none;
+}
+
+/* Tap target laid over a wire while a terminal is pending: click to branch. */
+:where(.arstema-wiring) .as-lab-board__wire-tap {
+  stroke: var(--as-annotation);
+  stroke-opacity: 0;
+  stroke-width: 14;
+  stroke-linecap: round;
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab-board__wire-tap:hover,
+:where(.arstema-wiring) .as-lab-board__wire-tap:focus-visible {
+  stroke-opacity: 0.4;
+  outline: none;
+}
+
+/* Keyboard focus for the SVG controls. */
+:where(.arstema-wiring) .as-lab-board__terminal:focus-visible,
+:where(.arstema-wiring) .as-lab-board [role='button']:focus-visible {
+  outline: 2px solid var(--as-focus-ring);
+  outline-offset: 2px;
+}
+
+/* --- Readout ------------------------------------------------------------- */
+
+:where(.arstema-wiring) .as-lab__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--as-space-md, 1rem);
+}
+
+:where(.arstema-wiring) .as-lab__readout {
+  border: 1px solid var(--as-border-default);
+  border-radius: var(--as-radius-sm, 4px);
+  background: var(--as-surface-elevated);
+}
+
+:where(.arstema-wiring) .as-lab__reading {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--as-border-subtle);
+}
+
+:where(.arstema-wiring) .as-lab__reading:last-child {
+  border-bottom: none;
+}
+
+:where(.arstema-wiring) .as-lab__reading-label {
+  font-size: 0.8125rem;
+  color: var(--as-text-secondary);
+}
+
+:where(.arstema-wiring) .as-lab__reading-value {
+  font-family: var(--as-font-mono);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(.arstema-wiring) .as-lab__reading-value--measure {
+  color: var(--as-result-emphasis);
+}
+
+:where(.arstema-wiring) .as-lab__reading-value[data-faulted] {
+  color: var(--as-status-danger);
+}
+
+:where(.arstema-wiring) .as-lab__pack-download {
+  min-height: 1.8rem;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--as-accent);
+  border-radius: 0.45rem;
+  background: transparent;
+  color: var(--as-accent);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+:where(.arstema-wiring) .as-lab__pack-download:disabled {
+  opacity: 0.55;
+}
+
+/* Overload trip reset (M3-C2) — inline, disabled until cooled to resetThreshold. */
+:where(.arstema-wiring) .as-lab__ol-reset {
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.5rem;
+  font: inherit;
+  font-size: 0.75rem;
+  border: 1px solid var(--as-accent);
+  border-radius: 0.35rem;
+  background: var(--as-surface-elevated);
+  color: var(--as-accent);
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab__ol-reset:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Tripped MCB (M3-C3) — shape already differs (lever + "TRIP" text); add a danger tint. */
+:where(.arstema-wiring) .as-lab-board__breaker[data-tripped] .as-lab-board__body {
+  stroke: var(--as-status-danger);
+  stroke-width: 2;
+}
+
+:where(.arstema-wiring) .as-lab-board__breaker[data-tripped] .as-lab-board__lever {
+  stroke: var(--as-status-danger);
+}
+
+/* --- Motor advisory (non-fault: it hums, it does not explode) ------------ */
+
+:where(.arstema-wiring) .as-lab-advisory {
+  border: 1px solid var(--as-status-warning);
+  border-left-width: 4px;
+  border-radius: var(--as-radius-sm, 4px);
+  background: var(--as-status-warning-surface);
+  padding: 0.75rem 1rem;
+}
+
+:where(.arstema-wiring) .as-lab-advisory__tag {
+  margin: 0;
+  font-family: var(--as-font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--as-status-warning);
+}
+
+:where(.arstema-wiring) .as-lab-advisory__title {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--as-text-primary);
+}
+
+:where(.arstema-wiring) .as-lab-advisory__why {
+  margin: 0;
+  line-height: 1.55;
+  font-size: 0.875rem;
+  color: var(--as-text-primary);
+  overflow-wrap: anywhere;
+}
+
+/* --- Diagnose ------------------------------------------------------------ */
+
+:where(.arstema-wiring) .as-lab-diagnose {
+  border: 1px solid var(--as-status-danger);
+  border-left-width: 4px;
+  border-radius: var(--as-radius-sm, 4px);
+  background: var(--as-status-danger-surface);
+  padding: 0.75rem 1rem;
+}
+
+:where(.arstema-wiring) .as-lab-diagnose__tag {
+  margin: 0;
+  font-family: var(--as-font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--as-status-danger);
+}
+
+:where(.arstema-wiring) .as-lab-diagnose__title {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--as-text-primary);
+}
+
+:where(.arstema-wiring) .as-lab-diagnose__reading {
+  display: flex;
+  gap: 1.5rem;
+  margin: 0 0 0.5rem;
+  padding: 0.5rem 0;
+  border-block: 1px solid var(--as-border-default);
+}
+
+:where(.arstema-wiring) .as-lab-diagnose__reading div {
+  display: flex;
+  flex-direction: column;
+}
+
+:where(.arstema-wiring) .as-lab-diagnose__reading dt {
+  font-size: 0.72rem;
+  color: var(--as-text-secondary);
+}
+
+:where(.arstema-wiring) .as-lab-diagnose__reading dd {
+  margin: 0;
+  font-family: var(--as-font-mono);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--as-text-primary);
+}
+
+:where(.arstema-wiring) .as-lab-diagnose__why,
+:where(.arstema-wiring) .as-lab-diagnose__fix {
+  margin: 0.35rem 0 0;
+  line-height: 1.55;
+  font-size: 0.875rem;
+  color: var(--as-text-primary);
+  overflow-wrap: anywhere;
+}
+
+:where(.arstema-wiring) .as-lab-diagnose__lead {
+  font-weight: 700;
+}
+
+/* --- Replace confirmation dialog ----------------------------------------- */
+
+:where(.arstema-wiring) .as-lab-replace {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+:where(.arstema-wiring) .as-lab-replace::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--as-page-fg);
+  opacity: 0.35;
+}
+
+:where(.arstema-wiring) .as-lab-replace__panel {
+  position: relative;
+  max-width: 24rem;
+  padding: 1.25rem;
+  border: 1px solid var(--as-border-strong);
+  border-radius: var(--as-radius-sm, 4px);
+  background: var(--as-surface-elevated);
+}
+
+:where(.arstema-wiring) .as-lab-replace__text {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--as-text-primary);
+}
+
+:where(.arstema-wiring) .as-lab-replace__actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+/*
+ * "Ya" and "Tidak" are deliberately IDENTICAL — same class, same neutral colour,
+ * no default/highlight — so the reader must read rather than reflex-click.
+ */
+:where(.arstema-wiring) .as-lab-replace__btn {
+  min-height: 2.75rem;
+  min-width: 5rem;
+  padding: 0 1rem;
+  border: 1px solid var(--as-border-strong);
+  border-radius: var(--as-radius-sm, 4px);
+  background: var(--as-surface-primary);
+  color: var(--as-text-primary);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* --- M3-UX1 stage: sidebar collapse + focus mode ------------------------- */
+
+:where(.arstema-wiring) .as-lab__side-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+:where(.arstema-wiring) .as-lab__side-title {
+  font-family: var(--as-font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--as-text-muted);
+}
+
+/* Focus mode: hide the palette + head; the board takes the whole stage. The run
+ * toolbar and the (collapsible) status panel stay reachable. */
+:where(.arstema-wiring) .as-lab[data-focus] .as-lab__palette-panel {
+  display: none;
+}
+
+:where(.arstema-wiring) .as-lab[data-focus] .as-lab__stage {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* --- M3-B1.5 MCB: handle hit area, selection outline, rating panel -------- */
+
+/* Invisible-but-clickable handle target (mirror of the terminal-merge pattern). */
+:where(.arstema-wiring) .as-lab-board__breaker-hit {
+  fill: var(--as-surface-elevated);
+  fill-opacity: 0;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+:where(.arstema-wiring) .as-lab-board__breaker-handle {
+  cursor: pointer;
+}
+
+/* A selected MCB body gets the accent outline. */
+:where(.arstema-wiring) .as-lab-board__breaker[data-selected] .as-lab-board__body {
+  stroke: var(--as-accent);
+  stroke-width: 2;
+}
+
+:where(.arstema-wiring) .as-lab__props {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--as-border-default);
+  border-left: 3px solid var(--as-accent);
+  border-radius: var(--as-radius-sm, 4px);
+  background: var(--as-surface-muted);
+}
+
+:where(.arstema-wiring) .as-lab__prop-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+:where(.arstema-wiring) .as-lab__timer-fields {
+  display: grid;
+  gap: 0.55rem;
+}
+
+:where(.arstema-wiring) .as-lab__duration-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.5rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0.55rem;
+  border: 1px solid var(--as-border-default);
+  border-radius: var(--as-radius-sm, 4px);
+}
+
+:where(.arstema-wiring) .as-lab__duration-field legend {
+  padding: 0 0.25rem;
+  color: var(--as-text-primary);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+:where(.arstema-wiring) .as-lab__duration-field label {
+  display: grid;
+  min-width: 0;
+  gap: 0.25rem;
+  color: var(--as-text-secondary);
+  font-size: 0.75rem;
+}
+
+:where(.arstema-wiring) .as-lab__duration-input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 2.5rem;
+  padding: 0 0.55rem;
+  border: 1px solid var(--as-border-strong);
+  border-radius: var(--as-radius-sm, 4px);
+  background: var(--as-surface-elevated);
+  color: var(--as-text-primary);
+  font-family: var(--as-font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+:where(.arstema-wiring) .as-lab__prop-note {
+  margin: 0;
+  color: var(--as-text-secondary);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.arstema-wiring) .as-lab *,
+  :where(.arstema-wiring) .as-lab-board * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/*
+ * Palette tiles follow the active projection: the field board shows the same
+ * photograph it places, the IEC board keeps its reference glyph. The tile box
+ * is unchanged so the grid does not reflow when you switch tabs.
+ */
+:where(.arstema-wiring) .as-lab__palette[data-projection='virtual'] .as-lab__tool-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:where(.arstema-wiring) .as-lab__tool-photo {
+  width: 100%;
+  height: 100%;
+  max-height: 2rem;
+  object-fit: contain;
+}
+
+/* --- IEC palette tiles -------------------------------------------------- */
+
+/*
+ * The professional tile carries the mark the component leaves on the drawing.
+ * Stroke follows currentColor so it inherits the tile's own state (armed,
+ * hovered, disabled) without a second colour rule.
+ */
+:where(.arstema-wiring) .as-iec-tile {
+  width: 100%;
+  height: 2rem;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+:where(.arstema-wiring) .as-iec-tile .as-iec-tile__node {
+  fill: currentColor;
+  stroke: none;
+}
+
+:where(.arstema-wiring) .as-iec-tile__text {
+  fill: currentColor;
+  stroke: none;
+  font-family: var(--as-font-mono);
+  font-size: 9px;
+  text-anchor: middle;
+}
+
+/* Reference designation, the way a schematic labels the part. */
+:where(.arstema-wiring) .as-lab__tool-designation {
+  align-self: center;
+  font-family: var(--as-font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: var(--as-accent);
+}
+
+/* --- worked-example picker ---------------------------------------------- */
+
+:where(.arstema-wiring) .as-lab__examples {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--as-space-2xs, 0.4rem);
+  margin-top: 0.5rem;
+}
+
+:where(.arstema-wiring) .as-lab__examples-label {
+  font-family: var(--as-font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--as-text-muted);
+}
+
+:where(.arstema-wiring) .as-lab__examples-select {
+  min-height: 2.25rem;
+  min-width: min(100%, 18rem);
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--as-border-default);
+  border-radius: var(--as-radius-sm, 4px);
+  background: var(--as-surface-elevated);
+  color: var(--as-text-primary);
+  font: inherit;
+}
+
+:where(.arstema-wiring) .as-lab__examples-hint {
+  flex-basis: 100%;
+  margin: 0;
+  max-width: var(--as-reading-max);
+  font-size: 0.8rem;
+  color: var(--as-text-secondary);
+}
+
+:where(.arstema-wiring) .as-lab__examples-source {
+  color: var(--as-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+/* Physical linkage between mutually interlocked contactors. This is deliberately
+ * distinct from a conductor: it carries no net colour and never animates. */
+:where(.arstema-wiring) .as-lab-board__mechanical-interlock line {
+  stroke: var(--as-warning, #f59e0b);
+  stroke-width: 2;
+  stroke-dasharray: 7 5;
+  opacity: 0.9;
+}
+
+:where(.arstema-wiring) .as-lab-board__mechanical-interlock text {
+  fill: var(--as-warning, #f59e0b);
+  font-family: var(--as-font-mono);
+  font-size: 8px;
+  font-weight: 700;
+  paint-order: stroke;
+  stroke: var(--as-surface-base, #080808);
+  stroke-width: 3px;
+}
+:where(.arstema-wiring) .as-lab__source-panel { padding: 10px; border: 1px solid var(--muted, #777); border-radius: 8px; font-size: 13px; max-height: 35vh; overflow: auto; }
+:where(.arstema-wiring) .as-lab__timer-config { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+:where(.arstema-wiring) .as-lab__timer-config input { width: 90px; }
+:where(.arstema-wiring) .as-lab__source-table { overflow: auto; max-height: 250px; }
+:where(.arstema-wiring) .as-lab__source-table td, :where(.arstema-wiring) .as-lab__source-table th { padding: 4px 8px; text-align: left; }
+:where(.arstema-wiring) .as-lab__area-nav { max-width: 105px; min-height: 38px; border-radius: 8px; font: inherit; color: inherit; background: var(--surface, #222); }

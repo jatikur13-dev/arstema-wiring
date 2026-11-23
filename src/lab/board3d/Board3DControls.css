@@ -1,0 +1,100 @@
+/* Portable CAD controls: package-local, no consumer stylesheet dependency. */
+/* Panel 3D memakai palet tuan rumah bila ada — situs yang memasang Wiring
+   berhak menentukan warnanya — dan jatuh ke warna sendiri bila berdiri sendiri.
+   Nilai cadangan di bawah adalah tampilan asli paket ini. */
+:where(.arstema-wiring) .board3d {
+ --b3-surface:var(--surface,#191c20);--b3-raised:var(--key,#23272c);--b3-line:var(--border,#3b4148);
+ --b3-ink:var(--text,#f0f1f2);--b3-muted:var(--muted,#abb2ba);--b3-accent:var(--accent,#f3a24b);
+ background:var(--b3-surface);color:var(--b3-ink);border-radius:6px;
+}
+/* Kanvas WebGL digambar tembus pandang, jadi dasar panggungnya ikut palet ini
+   tanpa warna yang ditulis dua kali di CSS dan di kode render. */
+:where(.arstema-wiring) .board3d .board3d-stage {background:var(--bg,#111d28);}
+:where(.arstema-wiring) .board3d header {padding-bottom:10px;border-bottom:1px solid var(--b3-line);font-size:14px;}
+:where(.arstema-wiring) .board3d header strong {font-weight:600;}
+:where(.arstema-wiring) .board3d header span,:where(.arstema-wiring) .board3d p {color:var(--b3-muted);}
+:where(.arstema-wiring) .board3d button,:where(.arstema-wiring) .board3d select {
+ min-height:40px;border:1px solid var(--b3-line);border-radius:5px;
+ background:var(--b3-raised);color:var(--b3-ink);box-shadow:none;
+ font:500 12px/1.3 system-ui,sans-serif;padding:5px 8px;
+ transition:background-color 120ms,border-color 120ms;
+}
+:where(.arstema-wiring) .board3d button:disabled {opacity:1;color:var(--b3-muted);background:color-mix(in srgb,var(--b3-raised) 60%,transparent);border-color:var(--b3-line);}
+:where(.arstema-wiring) .board3d button[aria-pressed=true] {background:color-mix(in srgb,var(--b3-accent) 22%,transparent);color:var(--b3-accent);border-color:color-mix(in srgb,var(--b3-accent) 55%,transparent);}
+:where(.arstema-wiring) .board3d button:active:not(:disabled) {background:color-mix(in srgb,var(--b3-ink) 14%,var(--b3-raised));}
+:where(.arstema-wiring) .board3d :focus-visible {outline:2px solid var(--b3-accent);outline-offset:2px;}
+:where(.arstema-wiring) .board3d input {accent-color:var(--b3-accent);}
+:where(.arstema-wiring) .board3d .board3d-toolbar {grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) 40px 40px;gap:4px;align-items:center;padding-bottom:0;}
+:where(.arstema-wiring) .board3d .board3d-toolbar :is(button,select),:where(.arstema-wiring) .board3d .board3d-inspector :is(button,select) {min-height:40px;}
+:where(.arstema-wiring) .board3d .board3d-toolbar :is(button,select) {background:transparent;border-color:transparent;}
+:where(.arstema-wiring) .board3d .board3d-toolbar select:first-child {border-color:var(--b3-line);}
+:where(.arstema-wiring) .board3d .board3d-toolbar button {font-size:12px;}
+:where(.arstema-wiring) .board3d .board3d-stage {border-radius:3px;}
+:where(.arstema-wiring) .board3d .board3d-details {border-top:1px solid var(--b3-line);}
+:where(.arstema-wiring) .board3d .board3d-details>summary {font-weight:600;padding:10px 2px;min-height:40px;}
+:where(.arstema-wiring) .board3d fieldset {border:0;border-top:1px solid var(--b3-line);border-radius:0;padding:6px 0;margin:0;}
+:where(.arstema-wiring) .board3d legend {font-size:12px;font-weight:600;color:var(--b3-muted);padding:0 8px 0 0;}
+:where(.arstema-wiring) .board3d label {display:flex;align-items:center;gap:8px;font-size:12px;line-height:1.4;color:var(--b3-muted);margin:4px 0;}
+:where(.arstema-wiring) .board3d label select {flex:1;min-width:0;width:auto;}
+:where(.arstema-wiring) .board3d .board3d-tools {gap:4px;margin:4px 0;}
+:where(.arstema-wiring) .board3d .board3d-stepper {display:flex;align-items:center;flex-wrap:nowrap;}
+:where(.arstema-wiring) .board3d .board3d-stepper button {min-width:40px;}
+:where(.arstema-wiring) .board3d .board3d-stepper output {min-width:44px;text-align:center;}
+:where(.arstema-wiring) .board3d .board3d-inspector {gap:8px;}
+:where(.arstema-wiring) .board3d .board3d-inspector p {font-size:12px;margin:5px 0;}
+:where(.arstema-wiring) .board3d .board3d-help>summary {min-height:40px;padding:10px 0;box-sizing:border-box;cursor:pointer;font-size:12px;}
+:where(.arstema-wiring) .board3d.board3d-full .board3d-details[open] {background:var(--b3-surface);border-color:var(--b3-line);border-radius:6px;padding:12px;}
+/* Scene labels are annotations, not 44px interaction-toolbar buttons. */
+:where(.arstema-wiring) .board3d .board3d-label {min-height:26px;padding:2px 5px;font-size:12px;background:#191c20ed;border-color:#a77b3e;color:#fff;}
+@media(hover:hover){:where(.arstema-wiring) .board3d button:hover:not(:disabled){background:#343a42;}}
+@media(max-width:440px){
+ :where(.arstema-wiring) .board3d .board3d-toolbar {grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) 40px 40px;}
+}
+@media(prefers-reduced-motion:reduce){:where(.arstema-wiring) .board3d :is(button,select){transition:none;}}
+:where(.arstema-wiring) .board3d-assets:empty{display:none}
+:where(.arstema-wiring) .board3d-assets{font-size:12px;padding:5px 0;color:#e8bc81}
+:where(.arstema-wiring) .as-lab--takar[data-board3d] .board3d{height:100%;display:grid;grid-template-rows:auto auto auto minmax(160px,1fr) auto auto}
+:where(.arstema-wiring) .as-lab--takar .board3d>header{grid-row:1}
+:where(.arstema-wiring) .as-lab--takar .board3d>.board3d-toolbar{grid-row:2}
+:where(.arstema-wiring) .as-lab--takar .board3d>.board3d-assets{grid-row:3}
+:where(.arstema-wiring) .as-lab--takar .board3d>.board3d-stage{grid-row:4;height:100%;min-height:0}
+:where(.arstema-wiring) .as-lab--takar .board3d>.board3d-details{grid-row:5;max-height:min(32vh,220px);overflow:auto}
+:where(.arstema-wiring) .as-lab--takar .board3d>.board3d-help{grid-row:6}
+@container wiring (min-width:900px){
+ :where(.arstema-wiring) .board3d{display:grid;grid-template-columns:minmax(0,1fr) 290px;column-gap:14px}
+ :where(.arstema-wiring) .board3d>header,:where(.arstema-wiring) .board3d>.board3d-toolbar,:where(.arstema-wiring) .board3d>.board3d-assets,:where(.arstema-wiring) .board3d>.board3d-stage,:where(.arstema-wiring) .board3d>.board3d-help,:where(.arstema-wiring) .board3d>p{grid-column:1}
+ :where(.arstema-wiring) .board3d>.board3d-details{grid-column:2;grid-row:1/8;max-height:80vh;overflow:auto;border-left:1px solid var(--b3-line);padding-left:12px}
+ :where(.arstema-wiring) .as-lab--takar .board3d>.board3d-details{grid-row:1/7;max-height:100%}
+ :where(.arstema-wiring) .board3d .board3d-inspector{grid-template-columns:minmax(0,1fr)}
+ :where(.arstema-wiring) .board3d.board3d-full{display:grid;grid-template-rows:auto auto auto minmax(0,1fr) auto}
+ :where(.arstema-wiring) .board3d.board3d-full .board3d-details[open]{position:static;max-height:100%;box-shadow:none;grid-column:2;grid-row:1/8}
+}
+
+/* ── VIEWPORT: gizmo sumbu dan tombol proyeksi ──────────────────────────────
+   Kanvas 3D dibaca seperti viewport CAD: gizmo di pojok menunjukkan arah papan
+   dan bisa ditekan, tombol proyeksi menukar perspektif ↔ ortografis. Semuanya
+   hanya cara melihat; rangkaian dan modelnya tidak tersentuh. */
+:where(.arstema-wiring) .board3d .board3d-toolbar {grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) auto 40px 40px;}
+:where(.arstema-wiring) .board3d .board3d-proyeksi {min-width:56px;border-color:var(--b3-line);font-variant-numeric:tabular-nums;}
+:where(.arstema-wiring) .board3d .board3d-viewport {position:relative;}
+:where(.arstema-wiring) .board3d .board3d-gizmo {
+ position:absolute;top:8px;right:8px;width:56px;pointer-events:none;
+ display:grid;justify-items:center;gap:3px;
+}
+:where(.arstema-wiring) .board3d .board3d-gizmo svg {width:56px;height:56px;border-radius:50%;background:color-mix(in srgb,var(--b3-surface) 55%,transparent);}
+:where(.arstema-wiring) .board3d .board3d-gizmo__lengan {stroke:var(--b3-muted);stroke-width:1.4;opacity:.55;}
+:where(.arstema-wiring) .board3d .board3d-gizmo__bola {fill:color-mix(in srgb,var(--b3-surface) 80%,transparent);stroke:var(--b3-muted);stroke-width:1.2;}
+:where(.arstema-wiring) .board3d .board3d-gizmo__titik[data-depan] .board3d-gizmo__bola {fill:var(--b3-accent);stroke:var(--b3-accent);}
+:where(.arstema-wiring) .board3d .board3d-gizmo__titik text {fill:var(--b3-ink);font:600 7px/1 system-ui,sans-serif;text-anchor:middle;pointer-events:none;}
+:where(.arstema-wiring) .board3d .board3d-gizmo__titik[data-depan] text {fill:var(--on-accent,#231405);}
+:where(.arstema-wiring) .board3d .board3d-gizmo__sasaran {fill:transparent;stroke:none;pointer-events:auto;cursor:pointer;}
+:where(.arstema-wiring) .board3d .board3d-gizmo__titik:hover .board3d-gizmo__bola {stroke:var(--b3-accent);stroke-width:1.8;}
+:where(.arstema-wiring) .board3d .board3d-gizmo__iso {
+ pointer-events:auto;min-height:0;padding:2px 6px;border-radius:4px;
+ font:600 9px/1.4 system-ui,sans-serif;letter-spacing:.08em;
+ background:color-mix(in srgb,var(--b3-surface) 82%,transparent);
+}
+@media (max-width:640px) {
+ :where(.arstema-wiring) .board3d .board3d-gizmo {width:46px;top:6px;right:6px;}
+ :where(.arstema-wiring) .board3d .board3d-gizmo svg {width:46px;height:46px;}
+}

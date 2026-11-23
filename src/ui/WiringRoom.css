@@ -1,0 +1,1047 @@
+:where(.arstema-wiring) .wiring-room {
+  --as-accent: var(--accent);
+  --as-accent-active: color-mix(in srgb, var(--accent) 82%, white);
+  --as-accent-contrast: var(--on-accent);
+  --as-accent-subtle: color-mix(in srgb, var(--accent) 15%, var(--surface));
+  --as-annotation: var(--muted);
+  --as-border: var(--border);
+  --as-border-default: var(--border);
+  --as-border-strong: color-mix(in srgb, var(--text) 30%, var(--border));
+  --as-border-subtle: color-mix(in srgb, var(--border) 62%, transparent);
+  --as-disabled-bg: color-mix(in srgb, var(--key) 72%, var(--bg));
+  --as-disabled-border: var(--border);
+  --as-disabled-text: color-mix(in srgb, var(--muted) 65%, transparent);
+  --as-focus-ring: color-mix(in srgb, var(--accent) 45%, transparent);
+  --as-font-mono: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --as-font-sans: var(--app-font);
+  --as-grid-line: color-mix(in srgb, var(--muted) 22%, transparent);
+  --as-page-fg: var(--text);
+  --as-radius-sm: 10px;
+  --as-reading-max: 42rem;
+  --as-result-emphasis: var(--accent);
+  --as-space-2xs: 0.4rem;
+  --as-space-sm: 0.75rem;
+  --as-space-md: 1rem;
+  --as-status-danger: #ef4444;
+  --as-status-danger-surface: color-mix(in srgb, #ef4444 14%, var(--surface));
+  --as-status-info: #38bdf8;
+  --as-status-success: #22c55e;
+  --as-status-warning: #f59e0b;
+  --as-status-warning-surface: color-mix(in srgb, #f59e0b 13%, var(--surface));
+  --as-surface-elevated: var(--key);
+  --as-surface-interactive: color-mix(in srgb, var(--key) 82%, var(--surface));
+  --as-surface-muted: color-mix(in srgb, var(--surface) 78%, var(--bg));
+  --as-surface-primary: var(--bg);
+  --as-terminal-aux-ring: #a78bfa;
+  --as-text-muted: var(--muted);
+  --as-text-primary: var(--text);
+  --as-text-secondary: color-mix(in srgb, var(--text) 72%, var(--muted));
+  --as-conductor-pe-base: #facc15;
+  --as-conductor-pe-stripe: #16a34a;
+  --as-wire-net-0: #ef4444;
+  --as-wire-net-1: #3b82f6;
+  --as-wire-net-2: #22c55e;
+  --as-wire-net-3: #f59e0b;
+  --as-wire-net-4: #a855f7;
+  --as-wire-net-5: #06b6d4;
+  --as-wire-net-6: #f97316;
+  --as-wire-net-7: #ec4899;
+  --as-wire-net-8: #84cc16;
+  --as-wire-net-9: #14b8a6;
+  --as-wire-net-10: #8b5cf6;
+  --as-wire-net-11: #eab308;
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: var(--sai-top) var(--sai-right) var(--sai-bottom) var(--sai-left);
+  background: var(--bg);
+  color: var(--text);
+  overscroll-behavior: none;
+}
+
+:where(.arstema-wiring) .as-lab--takar {
+  --wiring-control-dock-top: 58px;
+  --wiring-control-dock-right: 64px;
+  --wiring-projection-dock-bottom: 58px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__head {
+  display: none;
+}
+
+:where(.arstema-wiring) .as-lab__appbar {
+  position: relative;
+  z-index: 110;
+  flex: 0 0 52px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+  backdrop-filter: blur(12px);
+}
+/* Tanpa tombol kembali (chrome.backButton false): judul tidak menempel ke tepi. */
+:where(.arstema-wiring) .as-lab__appbar[data-host-back] { padding-left: 16px; }
+
+:where(.arstema-wiring) .as-lab__appbar-title {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+:where(.arstema-wiring) .as-lab__appbar-title strong {
+  font-size: 15px;
+  font-weight: 730;
+}
+
+:where(.arstema-wiring) .as-lab__appbar-title span {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+:where(.arstema-wiring) .as-lab__appbar-btn,
+:where(.arstema-wiring) .as-lab__drawer-close {
+  flex: 0 0 auto;
+  min-height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--key);
+  color: var(--text);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 650;
+  cursor: pointer;
+  padding: 0 11px;
+}
+
+:where(.arstema-wiring) .as-lab__appbar-back,
+:where(.arstema-wiring) .as-lab__appbar-icon,
+:where(.arstema-wiring) .as-lab__drawer-close {
+  width: 38px;
+  padding: 0;
+  font-size: 20px;
+}
+
+:where(.arstema-wiring) .as-lab__appbar-back {
+  color: var(--accent);
+}
+
+:where(.arstema-wiring) .as-lab__project-trigger {
+  min-width: 0;
+  max-width: min(31vw, 148px);
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  padding-inline: 9px;
+  text-align: left;
+}
+
+:where(.arstema-wiring) .as-lab__project-trigger-name,
+:where(.arstema-wiring) .as-lab__project-trigger-state {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:where(.arstema-wiring) .as-lab__project-trigger-name {
+  color: var(--text);
+  font-size: 10px;
+  font-weight: 720;
+}
+
+:where(.arstema-wiring) .as-lab__project-trigger-state {
+  color: var(--accent);
+  font-size: 8px;
+  font-weight: 680;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__toolbar {
+  position: absolute;
+  z-index: 100;
+  top: 52px;
+  bottom: 0;
+  left: 0;
+  width: min(88vw, 380px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 12px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 14px 14px calc(18px + var(--sai-bottom));
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: 16px 0 40px rgba(0, 0, 0, 0.34);
+  transform: translateX(-105%);
+  transition: transform 180ms ease;
+}
+
+:where(.arstema-wiring) .as-lab--takar[data-palette-open] .as-lab__toolbar {
+  transform: translateX(0);
+}
+
+:where(.arstema-wiring) .wiring-project-backdrop {
+  position: absolute;
+  z-index: 210;
+  inset: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.62);
+}
+
+:where(.arstema-wiring) .wiring-project-sheet {
+  position: absolute;
+  z-index: 220;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-height: min(88dvh, 760px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  box-sizing: border-box;
+  padding: 16px max(14px, var(--sai-right)) max(18px, calc(12px + var(--sai-bottom))) max(14px, var(--sai-left));
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-radius: 20px 20px 0 0;
+  background: color-mix(in srgb, var(--surface) 96%, var(--bg));
+  box-shadow: 0 -18px 48px rgba(0, 0, 0, 0.48);
+  color: var(--text);
+}
+
+:where(.arstema-wiring) .wiring-project-sheet__head {
+  position: sticky;
+  z-index: 1;
+  top: -16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: -4px -2px 12px;
+  padding: 8px 2px 10px;
+  background: color-mix(in srgb, var(--surface) 96%, var(--bg));
+}
+
+:where(.arstema-wiring) .wiring-project-sheet__head h2 {
+  margin: 2px 0 0;
+  font-size: 18px;
+  line-height: 1.15;
+}
+
+:where(.arstema-wiring) .wiring-project-sheet__eyebrow {
+  color: var(--accent);
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: 0.09em;
+}
+
+:where(.arstema-wiring) .wiring-project-sheet__head > button {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--key);
+  color: var(--text);
+  font: inherit;
+  font-size: 24px;
+}
+
+:where(.arstema-wiring) .wiring-project-field {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+:where(.arstema-wiring) .wiring-project-field input,
+:where(.arstema-wiring) .wiring-project-field select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 0 12px;
+  background: var(--key);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+}
+
+:where(.arstema-wiring) .wiring-project-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 9px 0 14px;
+}
+
+:where(.arstema-wiring) .wiring-project-meta span {
+  min-height: 26px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0 9px;
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 9px;
+}
+
+:where(.arstema-wiring) .wiring-project-meta span[data-save-state='SAVED'] {
+  color: var(--as-status-success);
+}
+
+:where(.arstema-wiring) .wiring-project-meta span[data-save-state='ERROR'] {
+  color: var(--as-status-danger);
+}
+
+:where(.arstema-wiring) .wiring-project-section {
+  min-width: 0;
+  margin: 0 0 14px;
+  border: 0;
+  padding: 0;
+}
+
+:where(.arstema-wiring) .wiring-project-section legend {
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+:where(.arstema-wiring) .wiring-standard-list {
+  display: grid;
+  gap: 7px;
+}
+
+:where(.arstema-wiring) .wiring-standard-list > label {
+  min-width: 0;
+  min-height: 52px;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px 10px;
+  background: var(--key);
+}
+
+:where(.arstema-wiring) .wiring-standard-list > label[data-selected] {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+:where(.arstema-wiring) .wiring-standard-list > label[data-availability='SOURCE_GATED'] {
+  opacity: 0.66;
+}
+
+:where(.arstema-wiring) .wiring-standard-list input {
+  accent-color: var(--accent);
+}
+
+:where(.arstema-wiring) .wiring-standard-list span,
+:where(.arstema-wiring) .wiring-standard-list strong,
+:where(.arstema-wiring) .wiring-standard-list small {
+  min-width: 0;
+  display: block;
+}
+
+:where(.arstema-wiring) .wiring-standard-list strong {
+  font-size: 11px;
+}
+
+:where(.arstema-wiring) .wiring-standard-list small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.3;
+}
+
+:where(.arstema-wiring) .wiring-standard-list em {
+  color: var(--accent);
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 750;
+}
+
+:where(.arstema-wiring) .wiring-project-fields-row,
+:where(.arstema-wiring) .wiring-project-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+:where(.arstema-wiring) .wiring-project-summary {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 14px;
+}
+
+:where(.arstema-wiring) .wiring-project-summary article {
+  min-width: 0;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  background: var(--bg);
+}
+
+:where(.arstema-wiring) .wiring-project-summary span,
+:where(.arstema-wiring) .wiring-project-summary small {
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.35;
+}
+
+:where(.arstema-wiring) .wiring-project-summary strong {
+  margin: 7px 0 3px;
+  color: var(--accent);
+  font-size: 12px;
+}
+
+:where(.arstema-wiring) .wiring-project-summary strong[data-valid='true'] {
+  color: var(--as-status-success);
+}
+
+:where(.arstema-wiring) .wiring-project-errors {
+  margin-top: 12px;
+  border: 1px solid color-mix(in srgb, var(--as-status-danger) 55%, var(--border));
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: var(--as-status-danger-surface);
+  font-size: 10px;
+}
+
+:where(.arstema-wiring) .wiring-project-errors ul {
+  margin: 7px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+:where(.arstema-wiring) .wiring-project-status-actions,
+:where(.arstema-wiring) .wiring-project-export-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+
+:where(.arstema-wiring) .wiring-project-export-actions {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+:where(.arstema-wiring) .wiring-project-status-actions button,
+:where(.arstema-wiring) .wiring-project-export-actions button,
+:where(.arstema-wiring) .wiring-project-export-actions label {
+  min-width: 0;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 7px 9px;
+  background: var(--key);
+  color: var(--text);
+  font: inherit;
+  font-size: 10px;
+  font-weight: 680;
+  text-align: center;
+}
+
+:where(.arstema-wiring) .wiring-project-status-actions button:first-child {
+  border-color: color-mix(in srgb, var(--accent) 65%, var(--border));
+}
+
+:where(.arstema-wiring) .wiring-project-status-actions button:disabled {
+  color: var(--as-disabled-text);
+  background: var(--as-disabled-bg);
+}
+
+:where(.arstema-wiring) .wiring-project-export-actions input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+:where(.arstema-wiring) .wiring-project-disclaimer,
+:where(.arstema-wiring) .wiring-project-import-error {
+  margin: 9px 1px 0;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+:where(.arstema-wiring) .wiring-project-import-error {
+  color: var(--as-status-danger);
+}
+
+@media (max-width: 430px) {
+  :where(.arstema-wiring) .as-lab__project-trigger {
+    max-width: 86px;
+  }
+
+  :where(.arstema-wiring) .as-lab__appbar-btn:not(.as-lab__appbar-back, .as-lab__appbar-icon, .as-lab__project-trigger) {
+    padding-inline: 8px;
+  }
+
+  :where(.arstema-wiring) .wiring-project-summary {
+    grid-template-columns: 1fr;
+  }
+
+  :where(.arstema-wiring) .wiring-project-summary article {
+    min-height: 0;
+  }
+
+  :where(.arstema-wiring) .wiring-project-export-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 360px) {
+  :where(.arstema-wiring) .as-lab__project-trigger {
+    width: 44px;
+    max-width: 44px;
+    align-items: center;
+    padding: 0;
+  }
+
+  :where(.arstema-wiring) .as-lab__project-trigger-name {
+    display: none;
+  }
+
+  :where(.arstema-wiring) .as-lab__project-trigger-state {
+    font-size: 0;
+  }
+
+  :where(.arstema-wiring) .as-lab__project-trigger-state::after {
+    content: 'P';
+    font-size: 12px;
+  }
+
+  :where(.arstema-wiring) .wiring-project-fields-row,
+  :where(.arstema-wiring) .wiring-project-status-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+:where(.arstema-wiring) .as-lab__drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+:where(.arstema-wiring) .as-lab__drawer-head > div {
+  min-width: 0;
+}
+
+:where(.arstema-wiring) .as-lab__drawer-head strong,
+:where(.arstema-wiring) .as-lab__drawer-head span {
+  display: block;
+}
+
+:where(.arstema-wiring) .as-lab__drawer-head strong {
+  font-size: 16px;
+}
+
+:where(.arstema-wiring) .as-lab__drawer-head span {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+:where(.arstema-wiring) .as-lab__drawer-backdrop {
+  position: absolute;
+  z-index: 90;
+  inset: 52px 0 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.46);
+  cursor: default;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__palette-panel {
+  flex: 0 0 auto;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__board-tabs.as-lab__board-tabs--drawer {
+  position: static;
+  z-index: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  max-width: none;
+  margin: 0 0 2px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg) 72%, var(--surface));
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__board-tabs.as-lab__board-tabs--drawer button {
+  min-width: 0;
+  min-height: 40px;
+  padding: 6px 8px;
+  border-color: transparent;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 680;
+  line-height: 1.2;
+  /* U8 (audit ARSTEMA 16 Nov 2026): nama papan boleh dua baris; dulu terpotong "Diagram IEC 60…". */
+  white-space: normal;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__board-tabs.as-lab__board-tabs--drawer button[aria-selected='true'] {
+  border-color: var(--accent);
+  background: var(--key);
+  color: var(--text);
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__chips {
+  padding: 2px 0 5px;
+}
+
+/* U8 (audit ARSTEMA 16 Nov 2026): jumlah kolom mengikuti lebar laci, bukan lebar layar. Dulu empat kolom di layar
+   720 px ke atas, padahal laci di desktop hanya 240 px: ubin 54 px dan nama tinggal satu kata. */
+:where(.arstema-wiring) .as-lab--takar .as-lab__palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 8px;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__palette-empty {
+  grid-column: 1 / -1;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__palette-search {
+  border-color: var(--border);
+  background: var(--key);
+  color: var(--muted);
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__palette-search:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(245, 146, 62, 0.14);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__palette-search input {
+  color: var(--text);
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__tool-cell,
+:where(.arstema-wiring) .as-lab--takar .as-lab__tool {
+  width: 100%;
+  min-width: 0;
+}
+
+/* U8: ubin setinggi isinya (dulu tetap 78 px, sehingga separuh huruf baris kedua tertutup), dan nama sampai tiga baris
+   supaya varian seperti "PNP NO" dan "NPN NC" tetap terbaca. */
+:where(.arstema-wiring) .as-lab--takar .as-lab__tool {
+  height: auto;
+  min-height: 78px;
+  border-radius: 12px;
+  touch-action: pan-y;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__tool-label {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow-wrap: anywhere;
+}
+
+/* U8: tombol info 28 px (dulu 20 px, 64 buah), tetap di sudut ubin. */
+:where(.arstema-wiring) .as-lab--takar .as-lab__tool-info {
+  top: 3px;
+  right: 3px;
+  width: 28px;
+  height: 28px;
+  font-size: 0.8rem;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__tool-photo {
+  max-height: 32px;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__actions .as-lab__btn {
+  min-width: 0;
+  padding: 0 8px;
+  font-size: 12px;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__examples {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-top: 0;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__examples-select {
+  width: 100%;
+  min-width: 0;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__run {
+  position: absolute;
+  z-index: 50;
+  top: 60px;
+  left: 8px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(10px);
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__run .as-lab__btn {
+  width: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  padding: 0;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+/* Source/timer disclosure participates in layout; leave the fixed Run dock free. */
+:where(.arstema-wiring) .as-lab--takar .as-lab__source-panel {
+  flex: 0 0 auto;
+  margin: 60px 8px 8px;
+  max-height: min(35vh, 310px);
+  min-height: 0;
+  box-sizing: border-box;
+  background: var(--surface);
+  color: var(--text);
+}
+:where(.arstema-wiring) .as-lab--takar .as-lab__source-panel summary { cursor: pointer; font-weight: 650; }
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__focus-toggle,
+:where(.arstema-wiring) .as-lab--takar .as-lab__guidance {
+  display: none;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__layout-warning {
+  position: absolute;
+  z-index: 55;
+  top: 114px;
+  left: 8px;
+  right: 8px;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: block;
+  overflow: hidden;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__workspace,
+:where(.arstema-wiring) .as-lab--takar .as-lab__boards,
+:where(.arstema-wiring) .as-lab--takar .as-lab__board-panel {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__workspace {
+  position: relative;
+  box-sizing: border-box;
+  /* The run, zoom, and projection controls are overlay docks. Reserving their
+     dimensions here shortened the actual canvas (most visibly by 64 px on the
+     right), so the grid stopped before the screen edge. Keep the workspace truly
+     fullscreen and let those controls float above it. */
+  padding: 0;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__boards {
+  display: block;
+}
+
+/* Unlike the pan/zoom 2D canvas, 3D includes document-flow controls and an
+   inspector. Reserve the floating docks and allow its entire content to scroll. */
+:where(.arstema-wiring) .as-lab--takar[data-board3d] .as-lab__workspace {
+  padding-top: 64px;
+  padding-bottom: 104px;
+}
+:where(.arstema-wiring) .as-lab--takar[data-board3d] .as-lab__boards {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-padding-bottom: 12px;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__board-title {
+  display: none;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__board-wrap,
+:where(.arstema-wiring) .as-lab--takar[data-focus] .as-lab__board-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  scrollbar-width: none;
+  overscroll-behavior: none;
+  background: var(--bg);
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__board-wrap::-webkit-scrollbar {
+  display: none;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab-board__field {
+  fill: var(--bg);
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab-board__grid {
+  stroke: color-mix(in srgb, var(--muted) 27%, transparent);
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__zoom {
+  position: absolute;
+  z-index: 45;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  grid-template-columns: 42px;
+  gap: 5px;
+  margin: 0;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(10px);
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__zoom-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__zoom-pct {
+  min-width: 0;
+  font-size: 9px;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__board-tabs {
+  position: absolute;
+  z-index: 45;
+  right: 8px;
+  bottom: 8px;
+  left: 8px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  max-width: 390px;
+  margin: 0 auto;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(10px);
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__board-tabs button {
+  min-width: 0;
+  min-height: 38px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: inherit;
+  font-size: 10px;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__board-tabs button[aria-selected='true'] {
+  background: var(--key);
+  box-shadow: inset 0 -2px 0 var(--accent);
+  color: var(--text);
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__side {
+  position: absolute;
+  z-index: 85;
+  right: 8px;
+  bottom: 58px;
+  left: 8px;
+  max-height: min(48%, 420px);
+  overflow-y: auto;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface) 97%, transparent);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(14px);
+  transform: translateY(calc(100% + 80px));
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 180ms ease;
+}
+
+:where(.arstema-wiring) .as-lab--takar[data-status-open] .as-lab__side {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+:where(.arstema-wiring) .as-lab--takar .as-lab__status-toggle {
+  display: none;
+}
+
+:where(.arstema-wiring) .as-lab__drag-ghost {
+  position: fixed;
+  z-index: 140;
+  width: 78px;
+  min-height: 66px;
+  display: grid;
+  place-items: center;
+  gap: 3px;
+  box-sizing: border-box;
+  padding: 7px;
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--key) 92%, transparent);
+  color: var(--text);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.42);
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+:where(.arstema-wiring) .as-lab__drag-ghost img,
+:where(.arstema-wiring) .as-lab__drag-ghost svg {
+  width: 42px;
+  height: 32px;
+  object-fit: contain;
+}
+
+:where(.arstema-wiring) .as-lab__drag-ghost span {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 9px;
+  font-weight: 650;
+}
+
+@media (min-width: 720px) {
+  :where(.arstema-wiring) .as-lab--takar .as-lab__toolbar {
+    width: min(64vw, 440px);
+  }
+
+  :where(.arstema-wiring) .as-lab--takar .as-lab__side {
+    top: 60px;
+    right: 70px;
+    bottom: 70px;
+    left: auto;
+    width: 330px;
+    max-height: none;
+    transform: translateX(calc(100% + 90px));
+  }
+
+  :where(.arstema-wiring) .as-lab--takar[data-status-open] .as-lab__side {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 359px) {
+  :where(.arstema-wiring) .as-lab__appbar-title span {
+    display: none;
+  }
+
+  :where(.arstema-wiring) .as-lab__appbar-btn {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  :where(.arstema-wiring) .as-lab--takar .as-lab__run .as-lab__btn {
+    width: 34px;
+    min-width: 34px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.arstema-wiring) .as-lab--takar .as-lab__toolbar,
+  :where(.arstema-wiring) .as-lab--takar .as-lab__side {
+    transition: none;
+  }
+}
+
+/* Reserve panel space on tablets/desktops instead of covering the circuit. */
+@container wiring (min-width:768px){
+ /* U8: laci 300 px (dulu 240): tiga kolom ubin selebar ±90 px. */
+ :where(.arstema-wiring) .as-lab--takar[data-palette-open] .as-lab__toolbar{width:300px}
+ :where(.arstema-wiring) .as-lab--takar[data-palette-open] .as-lab__stage{margin-left:300px}
+ :where(.arstema-wiring) .as-lab--takar[data-palette-open] .as-lab__run{left:308px}
+ :where(.arstema-wiring) .as-lab--takar .as-lab__drawer-backdrop{display:none}
+ :where(.arstema-wiring) .as-lab--takar[data-status-open] .as-lab__stage{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:8px}
+ :where(.arstema-wiring) .as-lab--takar[data-status-open] .as-lab__side{position:relative;inset:auto;grid-column:2;grid-row:1;width:auto;max-height:100%;transform:none;box-shadow:none;border-radius:8px}
+ :where(.arstema-wiring) .as-lab--takar[data-status-open] .as-lab__workspace{grid-column:1;grid-row:1}
+}

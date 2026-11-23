@@ -1,0 +1,1 @@
+{"name":"wiring-react-example","private":true,"type":"module","scripts":{"dev":"vite","build":"vite build"},"dependencies":{"@arstema/wiring":"file:../..","react":"18.3.1","react-dom":"18.3.1"},"devDependencies":{"vite":"5.4.21"}}

@@ -5,7 +5,7 @@ Kode ini dirilis di bawah [PolyForm Noncommercial 1.0.0](LICENSE).
 **Boleh tanpa izin:** belajar, mengajar, riset, pemakaian pribadi, sekolah,
 kampus, lembaga pendidikan, fork, dan kontribusi.
 
-**Wajib izin tertulis dari Arstema:** menjual kode atau program ini, menjual
+**Wajib izin tertulis dari Arstema:** menjual kode, program, atau aset 3D/gambarnya, menjual
 produk atau layanan yang memakainya, atau pemakaian komersial lain dalam bentuk
 apa pun.
 

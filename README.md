@@ -3,6 +3,8 @@
 Satu sumber editor wiring TAKAR dan ARSTEMA. Engine, Visual, IEC, 3D dan routing
 berjalan lokal di perangkat. Bukan sertifikasi desain listrik atau replika OEM.
 
+**Live demo:** https://arstema.com/wiring
+
 ## Build dan pemasangan lokal
 
 Dari root repositori: `npm install`, `node build.mjs`, lalu
@@ -60,6 +62,22 @@ CSS dibatasi root `.arstema-wiring`; ukuran root berasal dari host. Tidak
 mengambil alih history/popstate website. Shortcut hanya untuk event dalam root.
 Kamera, graph, parameter dan metadata memakai format proyek lama. Tidak ada
 sinkronisasi lintas domain/perangkat; gunakan ekspor/impor JSON.
+
+## Aset 3D dan gambar
+
+Model 3D (GLB) dan gambar komponen (WebP) tidak disimpan di repositori ini.
+Editor mengunduhnya saat dipakai dari server konten resmi Arstema sebagai paket
+`wiring-virtual` dan `wiring-models-3d`. Setiap paket diperiksa tanda tangan
+ECDSA dan sha256 per berkas sebelum dipakai. Tanpa koneksi, editor tetap jalan
+dengan media dasar.
+
+Aset tersebut hak cipta Arstema dan tidak termasuk lisensi kode di repo ini.
+Boleh dimuat lewat editor untuk belajar dan non-komersial. Dilarang
+mengunduh ulang, menyebarkan, atau menjual aset secara terpisah tanpa izin
+tertulis Arstema.
+
+Pemegang lisensi komersial dapat menyajikan aset dari server sendiri lewat prop
+`assetMirror`. Keaslian isi tetap dijamin tanda tangan yang sama.
 
 ## Lisensi
 

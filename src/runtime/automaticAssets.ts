@@ -1,7 +1,9 @@
 import type { WiringAssets } from './services'
 import publicKey from './contentPublicKey.json'
 
+// Alamat asal hanya dipakai untuk mencocokkan URL yang ikut ditandatangani manifest; tidak pernah diunduh.
 const PREFIX = 'https://ehvefpupveviiahakmbw.supabase.co/storage/v1/object/public/takar-content/'
+const DEFAULT_MIRROR = 'https://cdn.jsdelivr.net/gh/jatikur13-dev/arstema-wiring-assets@v1.0.0/'
 
 /**
  * Menyalin alamat berkas paket ke cermin milik tuan rumah.
@@ -39,14 +41,12 @@ async function bounded(url: string, limit: number): Promise<ArrayBuffer> {
  * tetap diperiksa persis seperti biasa; hanya alamat pengambilannya yang pindah.
  */
 export function createAutomaticAssets(mirror?: string): WiringAssets & { dispose(): void } {
-  /* Cermin dicoba lebih dulu, sumber asal jadi jaring pengaman. Tuan rumah boleh
-     menyajikan sebagian paket saja — mis. hanya model 3D — tanpa membuat paket
-     lain yang tidak ia simpan ikut gagal. Isi tetap dijamin sha256, dari mana pun
-     bytes-nya datang. */
+  /* Cermin tuan rumah dicoba lebih dulu, cermin GitHub (jsDelivr) jadi jaring
+     pengaman. Tuan rumah boleh menyajikan sebagian paket saja tanpa membuat paket
+     lain ikut gagal. Isi tetap dijamin sha256, dari mana pun bytes-nya datang. */
   async function ambil(url: string, limit: number) {
-    const cermin = alamatCermin(url, mirror)
-    if (cermin === url) return bounded(url, limit)
-    try { return await bounded(cermin, limit) } catch { return bounded(url, limit) }
+    if (mirror) try { return await bounded(alamatCermin(url, mirror), limit) } catch { /* lanjut ke cermin bawaan */ }
+    return bounded(alamatCermin(url, DEFAULT_MIRROR), limit)
   }
   const manifests = new Map<string, Promise<Manifest>>(), urls = new Map<string, Promise<string>>()
   const progress = new Map<string, { state: string }>(), blobs = new Set<string>()

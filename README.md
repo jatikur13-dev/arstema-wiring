@@ -69,19 +69,21 @@ sinkronisasi lintas domain/perangkat; gunakan ekspor/impor JSON.
 
 ## Aset 3D dan gambar
 
-Model 3D (GLB) dan gambar komponen (WebP) tidak disimpan di repositori ini.
-Editor mengunduhnya saat dipakai dari server konten resmi Arstema sebagai paket
-`wiring-virtual` dan `wiring-models-3d`. Setiap paket diperiksa tanda tangan
-ECDSA dan sha256 per berkas sebelum dipakai. Tanpa koneksi, editor tetap jalan
-dengan media dasar.
+Model 3D (GLB) dan gambar komponen (WebP) ada di repositori terpisah
+[arstema-wiring-assets](https://github.com/jatikur13-dev/arstema-wiring-assets)
+dan dimuat saat dipakai lewat jsDelivr, sebagai paket `wiring-virtual` dan
+`wiring-models-3d`. Setiap paket diperiksa tanda tangan ECDSA dan sha256 per
+berkas sebelum dipakai. Tanpa koneksi, editor tetap jalan dengan media dasar.
 
-Aset tersebut hak cipta Arstema dan tidak termasuk lisensi kode di repo ini.
+Aset tersebut hak cipta Arstema dan tidak termasuk lisensi kode di repo ini
+(lihat [lisensi aset](https://github.com/jatikur13-dev/arstema-wiring-assets/blob/main/LICENSE)).
 Boleh dimuat lewat editor untuk belajar dan non-komersial. Dilarang
 mengunduh ulang, menyebarkan, atau menjual aset secara terpisah tanpa izin
 tertulis Arstema.
 
 Pemegang lisensi komersial dapat menyajikan aset dari server sendiri lewat prop
-`assetMirror`. Keaslian isi tetap dijamin tanda tangan yang sama.
+`assetMirror`; jika gagal, editor kembali ke jsDelivr. Keaslian isi tetap
+dijamin tanda tangan yang sama.
 
 ## Lisensi
 

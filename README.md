@@ -5,7 +5,7 @@ berjalan lokal di perangkat. Bukan sertifikasi desain listrik atau replika OEM.
 
 **Live demo:** https://arstema.com/wiring
 
-![Demo Arstema Wiring: menyalakan MCB, menekan tombol start, diagram IEC 60617, dan panel komponen](docs/demo.gif)
+![Demo Arstema Wiring: simulasi rangkaian motor di papan virtual dan diagram IEC 60617](docs/demo.gif)
 
 Versi video: [docs/demo.mp4](docs/demo.mp4)
 
